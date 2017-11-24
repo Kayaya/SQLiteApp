@@ -1,5 +1,6 @@
 package com.example.a1kayat34.sqliteapp;
 
+import android.app.AlertDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,13 +58,41 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             Long id = Long.parseLong(etid.getText().toString());
 
             mysong = myhelper.findSong(id);
+            if(mysong == null){
+                new AlertDialog.Builder(this).setMessage("Error! ID "+id.toString()+" not found!...").setPositiveButton("OK", null).show();
 
-            song_title = mysong.getTitle();
-            song_artist = mysong.getArtist();
+            }
+            else {
 
+                song_title = mysong.getTitle();
+                song_artist = mysong.getArtist();
+
+                EditText ettitle = (EditText) findViewById(R.id.et_title);
+                EditText etartist = (EditText) findViewById(R.id.et_artist);
+
+                etartist.setText(String.valueOf(song_title));
+                ettitle.setText(String.valueOf(song_artist));
+            }
 
         }
         else if(view.getId()==R.id.btn_update){
+            EditText ettitle = (EditText) findViewById(R.id.et_title);
+            EditText etartist = (EditText) findViewById(R.id.et_artist);
+            EditText etid = (EditText) findViewById(R.id.et_id);
+            EditText etyear = (EditText) findViewById(R.id.et_year);
+
+            String title= ettitle.getText().toString();
+            String artist= etartist.getText().toString();
+            Long id = Long.parseLong(etid.getText().toString());
+            Long year = Long.parseLong(etyear.getText().toString());
+
+            int result=0;
+
+            result = myhelper.updateRecord(id, title,artist,year);
+            if(result == 0){
+
+            }
+
 
         }
         else if(view.getId()==R.id.btn_delete){

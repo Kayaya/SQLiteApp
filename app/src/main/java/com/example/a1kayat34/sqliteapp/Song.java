@@ -7,10 +7,12 @@ package com.example.a1kayat34.sqliteapp;
 public class Song {
     String artist;
     String title;
+    long year;
 
     public Song(String artist, String title) {
         this.artist = artist;
         this.title = title;
+        this.year = 0;
     }
 
     public String getArtist() {

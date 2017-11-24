@@ -40,8 +40,8 @@ public class MyHelper extends SQLiteOpenHelper {
 
         SQLiteStatement stmt = db.compileStatement
                 ("INSERT INTO Songs(title,artist) VALUES (?, ?)");
-        stmt.bindString (1, song.setTitle(title));
-        stmt.bindString (2, song.setArtist(artist));
+        stmt.bindString (1, title);
+        stmt.bindString (2, artist);
         long id = stmt.executeInsert();
         return id;
     }
@@ -62,6 +62,21 @@ public class MyHelper extends SQLiteOpenHelper {
         return song;
     }
 
-    //
+    //Update song details
+    public int updateRecord(long id, String title, String artist, long year)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        SQLiteStatement stmt = db.compileStatement
+                ("UPDATE Songs SET title=?, artist=?, year=? WHERE id=?");
+        stmt.bindString (1,title);
+        stmt.bindString (2,title);
+        stmt.bindLong (3, year);
+        stmt.bindLong (4, id);
+        //The number of rows being changed
+        int nAffectedRows = stmt.executeUpdateDelete();
+        return nAffectedRows;
+    }
+
+
 
 }
